@@ -1,0 +1,31 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# bin directory in EngineCode
+bin
+
+# CPU code
+*.o
+
+# RunRules
+.maxcompiler-activity.be
+binaries
+debug
+dist
+include
+maxfiles
+objects
