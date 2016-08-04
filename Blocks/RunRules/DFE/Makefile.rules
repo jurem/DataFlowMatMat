@@ -49,20 +49,20 @@ build: maxfiles
 maxfiles: $(MAXFILES_MAX)
 
 #
-# MaxFile: ColSum
+# MaxFile: MatMat
 #
 
 
-BUILDNAME_MAXFILE_1:=ColSum
-MAXFILE_1:=ColSum.max
+BUILDNAME_MAXFILE_1:=MatMat
+MAXFILE_1:=MatMat.max
 
-include/ColSum.h: maxfiles/ColSum.h
+include/MatMat.h: maxfiles/MatMat.h
 	cp $< $@
 
-maxfiles/ColSum.max maxfiles/ColSum.h:
+maxfiles/MatMat.max maxfiles/MatMat.h:
 # Ensure that maxfiles do not get build by this Makefile when running in MaxIDE
 ifndef MAXIDE_RUN
-	test -f $@ || env  MAX_BUILDPARAMS=" DFEModel=VECTIS  target=DFE  maxFileName=ColSum MPPREndCT='4' "  ant -v -f ColSum.xml
+	test -f $@ || env  MAX_BUILDPARAMS=" DFEModel=VECTIS  target=DFE  maxFileName=MatMat MPPREndCT='4' "  ant -v -f MatMat.xml
 else
 	test -f $@ || ( echo 'Maxfile unavailable: $@' >/dev/stderr ; exit 1 )
 endif

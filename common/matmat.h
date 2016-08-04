@@ -121,7 +121,7 @@ int check_outputs(size_t n, mat_t matA, mat_t matB, mat_t matC) {
 \
 	trace_outputs(size, matC); \
 \
-	float sum = mat_sum(size, size, matC); \
+	float sum = mat_sumall(size, size, matC); \
 	char* status = check_outputs(size, matA, matB, matC) ? "ok" : "err"; \
 	printf("%ld %f %s %ld %ld\n", size, sum, status, timer.realtime, timer.cputime); \
 \

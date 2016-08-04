@@ -6,12 +6,12 @@ MAXCOMPILER_QUOTE   := $(shell printf %q "$(MAXCOMPILERDIR)")
 
 RUNRULE_ARGS        := 
 RUNRULE_RUNENV      := LD_LIBRARY_PATH="$(MAXELEROSDIR)/lib:$(LD_LIBRARY_PATH)" 
-RUNRULE_MAXFILES    := ColSum.max  
-RUNRULE_MAXFILES_H  := ColSum.h 
+RUNRULE_MAXFILES    := MatMat.max  
+RUNRULE_MAXFILES_H  := MatMat.h 
 RUNRULE_CFLAGS      := 
 RUNRULE_LDFLAGS     := 
 
-TARGET_EXEC         := ColSumHw
+TARGET_EXEC         := MatMat
 TARGET_LIBRARY      := 
 
 
