@@ -1,0 +1,41 @@
+package multiply;
+
+import maxpower.kernel.arithmetic.FloatingPointMultiAdder;
+
+import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
+import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.Reductions;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.memory.Memory;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEType;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar;
+
+class MatMatKernel extends Kernel {
+
+	final DFEType valType = dfeFloat(8,24);
+
+	MatMatKernel(KernelParameters parameters, int blockSize) {
+		super(parameters);
+
+		CounterChain cc = control.count.makeCounterChain();
+		DFEVar i = cc.addCounter(blockSize, 1);
+		DFEVar j = cc.addCounter(blockSize, 1);
+
+		DFEVar matA = io.input("matA", valType);
+		DFEVar matB = io.input("matB", valType);
+
+		DFEVar[] summands = new DFEVar[blockSize];
+		for (int k = 0; k < blockSize; k++) {
+			DFEVar a = Reductions.streamHold(stream.offset(matA, +k), j === 0);
+
+			Memory<DFEVar> bBuf = mem.alloc(valType, blockSize);
+			bBuf.write(j, matB, i === k);
+			DFEVar b = stream.offset(bBuf.read(j), + blockSize * blockSize);
+
+			summands[k] = a * b;
+		}
+
+		DFEVar matC = FloatingPointMultiAdder.add(summands);
+		io.output("matC", matC, valType);
+	}
+}

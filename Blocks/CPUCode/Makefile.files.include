@@ -1,0 +1,5 @@
+#
+# This file is managed by MaxIDE. Do NOT change.
+#
+HEADERS:= common/common.h common/matmat.h common/matrix.h common/rand.h common/timer.h 
+SOURCES:= BlocksCpuCode.c 
