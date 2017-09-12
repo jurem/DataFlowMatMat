@@ -2,7 +2,9 @@
 #define COMMON_H
 
 
+#include <stdio.h>
 #include <stdarg.h>
+#include <stdlib.h>
 
 
 void error(const int status, const char * fmt, ...) {

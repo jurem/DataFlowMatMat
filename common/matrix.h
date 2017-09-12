@@ -1,13 +1,15 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include <stdlib.h>
+#include <math.h>
 
 #include "rand.h"
 
 // ********** type of elements ***********
 
 
-#define PRECISION	0.01
+#define PRECISION	0.1
 
 
 typedef float elt_t;
@@ -53,7 +55,7 @@ elt_t vec_sumall(size_t n, vec_t vec) {
 
 char vec_equals(size_t n, vec_t vecA, vec_t vecB) {
 	for (size_t i = 0; i < n; i++)
-		if (abs(vecA[i] - vecB[i]) > PRECISION) return 0;
+		if (fabs(vecA[i] - vecB[i]) > PRECISION) return 0;
 	return 1;
 }
 
@@ -61,7 +63,7 @@ char vec_equals(size_t n, vec_t vecA, vec_t vecB) {
 char vec_check(size_t n, vec_t vecA, vec_t vecB, char trace) {
 	char status = 1;
 	for (size_t i = 0; i < n; i++)
-		if (abs(vecA[i] - vecB[i]) > PRECISION) {
+		if (fabs(vecA[i] - vecB[i]) > PRECISION) {
 			if (trace) fprintf(stderr, "[%ld] error, output: %f != expected: %f\n", i, vecA[i], vecB[i]);
 			status = 0;
 		}
@@ -155,6 +157,17 @@ void mul_matmat(size_t n, size_t l, size_t m, mat_t matA, mat_t matB, mat_t matC
 			elt_t sum = 0;
 			for (size_t k = 0; k < l; k++)
 				sum += matA[i * m + k] * matB[k * l + j];
+			matC[i * m + j] = sum;
+		}
+}
+
+
+void mul_matmat_transposed(size_t n, size_t l, size_t m, mat_t matA, mat_t matB, mat_t matC) {
+	for (size_t i = 0; i < n; i++)
+		for (size_t j = 0; j < m; j++) {
+			elt_t sum = 0;
+			for (size_t k = 0; k < l; k++)
+				sum += matA[i * m + k] * matB[j * l + k];
 			matC[i * m + j] = sum;
 		}
 }
