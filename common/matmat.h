@@ -8,14 +8,17 @@
 // show help
 int help_flag = 0;
 
-// number of rows / columns. Matrix size is n*n
-size_t size = 64;
-
 /* tracing
 	0 - prints only n, sum of result, correctness, realtime, cputime
 	1 - prints input, output, final result
 */
 int trace = 0;
+
+// seed for random numbers
+int seed = 0;
+
+// number of rows / columns. Matrix size is n*n
+size_t size = 64;
 
 // elements of matrix are in -range  to +range interval
 float range = 100.0;
@@ -25,22 +28,23 @@ void help(const char * cmd) {
     printf("Usage: %s [filename]\n", cmd);
     printf("\nOptions:\n");
     printf("  -h, --help\n\tPrint short help\n");
+    printf("  -t, --trace\n\tTrace level: 0,1,2\n");
+    printf("  -s, --seed\n\tSeed for random numbers\n");
     printf("  -n, --size\n\tSize n of matrix\n");
     printf("  -r, --range\n\tRange of elements\n");
-    printf("  -t, --trace\n\tTrace level: 0,1,2\n");
-
 };
 
 
 struct option options[] = {
 	{ "help",	required_argument, 0, 'h' },
-	{ "size",	required_argument, 0, 'n' },
 	{ "trace",	required_argument, 0, 't' },
+	{ "seed",	required_argument, 0, 's' },
+	{ "size",	required_argument, 0, 'n' },
 	{ "range",	required_argument, 0, 'r' },
 	{ 0, 0, 0, 0 }
 };
 
-#define SHORTOPT "hn:t:r:"
+#define SHORTOPT "ht:n:r:s:"
 
 
 void parse_args(int argc, char * argv[]) {
@@ -53,11 +57,14 @@ void parse_args(int argc, char * argv[]) {
 			case 'h':
 				help_flag = 1;
 				break;
-			case 'n':
-				size = atoi(optarg);
-				break;
 			case 't':
 				trace = atoi(optarg);
+				break;
+			case 's':
+				seed = atoi(optarg);
+				break;
+			case 'n':
+				size = atoi(optarg);
 				break;
 			case 'r':
 				range = atoi(optarg);
